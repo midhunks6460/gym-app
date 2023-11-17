@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Gym App</title>
+</head>
+<body>
+    <h1>Gym Members</h1>
+    <ul>
+        {% for member in members %}
+            <li>
+                <h2>{{ member['name'] }}</h2>
+                <ul>
+                    {% for workout in member['workouts'] %}
+                        <li>{{ workout['type'] }} - {{ workout['duration'] }} minutes</li>
+                    {% endfor %}
+                </ul>
+                <form action="{{ url_for('add_workout', member_id=loop.index0) }}" method="post">
+                    <label for="workout_type">Workout Type:</label>
+                    <input type="text" id="workout_type" name="workout_type" required>
+                    <label for="workout_duration">Duration (minutes):</label>
+                    <input type="text" id="workout_duration" name="workout_duration" required>
+                    <button type="submit">Add Workout</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <form action="/add_member" method="post">
+        <label for="member_name">Member Name:</label>
+        <input type="text" id="member_name" name="member_name" required>
+        <button type="submit">Add Member</button>
+    </form>
+</body>
+</html>
